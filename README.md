@@ -16,9 +16,9 @@ Cloning the repository
 
 
 ## Usage
-
+Buka Mix_Design_SNI.py dan edit bagian input_data
+Open Mix_Design_SNI.py and edit Input_data section
 ```bash
-#Open mix_design_sni.py and edit Input_data section
 cd Concrete-Mix-Designer
 python concrete_mix_designer.py
 ```
