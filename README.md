@@ -3,7 +3,7 @@
 
 Sebuah program python untuk menghitung perancangan beton dengan syarat teknik dan ekonomis melalui standar SNI 7657-2012  
 
-A Python Program to calculate mix design beton with technical and economic requirement using SNI 7657-2012 standard
+A Python Program to calculate concrete design with technical and economic requirements using SNI 7657-2012 standard
 
 
 ## Cloning
