@@ -1,7 +1,6 @@
-
 #SNI 7657-2012
 
-#INPUT DATA
+#--INPUT DATA--#
 # Mutu Rencana Masukkan 15-40 Mpa
 mutu_rcn = 24
 
@@ -35,6 +34,8 @@ abs_agr_kasar = 0.5 #(%) Penyerapan Air Agregat Kasar
 #1 = Sedang
 #2 = Berat
 jenis_beton = 0 
+#--INPUT DATA--#
+
 
 #MENCARI AIR PENCAMPUR
 def airPencampur(slump, dim_agr) :
