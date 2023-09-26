@@ -2,7 +2,7 @@
 
 #--INPUT DATA--#
 # Mutu Rencana Masukkan 15-40 Mpa
-mutu_rcn = 24
+mutu_rcn = 20
 
 #Nilai Slump Masukkan "25-50","75-100","150-175",">175" 
 slump_rcn = "75-100"
@@ -12,10 +12,10 @@ slump_rcn = "75-100"
 dim_agr_maks = 37.5 
 
 #(kg/m^3) Berat Kering Oven Agregat Kasar
-berat_kering_oven = 1600 
+berat_kering_oven = 983.5
 
 #Berat Jenis Semen
-bj_semen = 3.15 
+bj_semen = 3.248
 
 #Beton dgn Udara / Tanpa udara
 #Masukkan True Jika beton dengan tambahan udara
@@ -23,11 +23,11 @@ bj_semen = 3.15
 bool_udara = False
 
 
-mods_agr_halus = 2.8 #Modulus Agregat Halus
-ssd_halus = 2.64 #Berat Jenis (SSD) Agregat Halus
-ssd_kasar = 2.681 #Berat Jenis (SSD) Agregat Kasar
-abs_air_halus = 0.7 #(%) Penyerapan Air Agregat Halus
-abs_agr_kasar = 0.5 #(%) Penyerapan Air Agregat Kasar
+mods_agr_halus = 2.996 #Modulus Agregat Halus
+ssd_halus = 1.81 #Berat Jenis (SSD) Agregat Halus
+ssd_kasar = 2.564 #Berat Jenis (SSD) Agregat Kasar
+abs_air_halus = 15.61 #(%) Penyerapan Air Agregat Halus
+abs_agr_kasar = 0,6 #(%) Penyerapan Air Agregat Kasar
 
 # Ubah jika beton dengan tambahan udara
 #0 = Ringan
@@ -117,12 +117,38 @@ def volume_agrKasar(dim_agr, mods_halus, bk_oven) :
                 [0.48,0.57,0.64,0.69,0.73,0.76,0.8,0.85],
                 [0.46,0.66,0.62,0.67,0.71,0.74,0.78,0.83],
                 [0.44,0.53,0.60,0.65,0.69,0.72,0.76,0.81]]
-    dim_key = dim_agrs.index(dim_agr)
-    mods_key = mods_keys.index(mods_halus)
-    vol_ratio = vol_agrs[mods_key][dim_key]
-    actual_vol = bk_oven * vol_ratio
-
+    actual_vol = 0
+    if mods_halus in mods_keys :
+        dim_key = dim_agrs.index(dim_agr)
+        mods_key = mods_keys.index(mods_halus)
+        vol_ratio = vol_agrs[mods_key][dim_key]
+        actual_vol = bk_oven * vol_ratio
+    else :
+        dim_index = dim_agrs.index(dim_agr)
+        vol_ratio = interpolasi_agr(dim_index, mods_halus)
+        actual_vol = bk_oven * vol_ratio
     return actual_vol
+
+def interpolasi_agr(dim_index, agr) :
+    mods_keys = [2.4,2.6,2.8,3]
+    vol_agrs = [[0.5,0.59,0.66,0.71,0.75,0.78,0.82,0.87],
+                [0.48,0.57,0.64,0.69,0.73,0.76,0.8,0.85],
+                [0.46,0.66,0.62,0.67,0.71,0.74,0.78,0.83],
+                [0.44,0.53,0.60,0.65,0.69,0.72,0.76,0.81]]
+    mods_kecil = max(filter(lambda x: x < agr, mods_keys), default=None)
+    mods_besar = min(filter(lambda x: x > agr, mods_keys), default=None)
+    vol_now_kecil = vol_agrs[mods_keys.index(mods_kecil)]
+    vol_now_besar = vol_agrs[mods_keys.index(mods_besar)]
+    vol_kecil = vol_now_kecil[dim_index]
+    vol_besar = vol_now_besar[dim_index]
+    hasil_interpolasi = vol_kecil + ((agr-mods_kecil)/(mods_besar-mods_kecil)) * (vol_besar-vol_kecil)
+    #print(mods_kecil)
+    #print(mods_besar)
+    #print(vol_kecil)
+    #print(vol_besar)
+    #print(agr)
+    #print(hasil_interpolasi)
+    return hasil_interpolasi
 
 #Perkiraan Awal Berat Beton
 def perk_awalBBeton(dim_agr) :
