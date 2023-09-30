@@ -1,5 +1,5 @@
 
-# MIX DESIGN BETON SNI 7657-2012
+# MIX DESIGN BETON SNI 7656-2012
 
 Sebuah program python untuk menghitung perancangan beton dengan syarat teknik dan ekonomis melalui standar SNI 7657-2012  
 
