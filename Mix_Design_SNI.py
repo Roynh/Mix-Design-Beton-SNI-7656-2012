@@ -1,4 +1,4 @@
-#SNI 7657-2012
+#SNI 7656-2012
 
 #--INPUT DATA--#
 # Mutu Rencana Masukkan 15-40 Mpa
